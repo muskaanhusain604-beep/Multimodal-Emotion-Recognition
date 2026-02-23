@@ -1,3 +1,7 @@
+## Demo
+
+![App Demo](app_demo.png)
+
 Multimodal Emotion Recognition System
 A deep learning–based multimodal emotion recognition system that combines Facial Expression Recognition and Speech Emotion Recognition using weighted probabilistic fusion.
 

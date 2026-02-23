@@ -1,0 +1,8 @@
+venv/
+Dataset/
+speech_dataset/
+__pycache__/
+*.wav
+*.jpg
+*.png
+*.mp4

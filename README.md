@@ -1,67 +1,160 @@
+Multimodal Emotion Recognition System
+
 ## Demo
 
 ![App Demo](app_demo.png)
 
-Multimodal Emotion Recognition System
-A deep learning–based multimodal emotion recognition system that combines Facial Expression Recognition and Speech Emotion Recognition using weighted probabilistic fusion.
+Overview:
 
-Live Demo:
-👉 https://multimodal-emotion-recognition-ngzbqonmrjxa5uopz9w3on.streamlit.app/
+This project implements a deep learning–based Multimodal Emotion Recognition System that combines:
 
-Overview
+Facial Expression Recognition (Image-based)
 
-This project predicts human emotion by analyzing:
-Facial expressions from images
-Emotional cues from speech audio
-A fusion layer that combines both modalities
-The final emotion is determined using a weighted decision strategy.
+Speech Emotion Recognition (Audio-based)
 
-Features
-Face emotion classification using CNN
-Speech emotion classification using audio feature extraction + deep learning
-StandardScaler applied to speech features
-Weighted fusion of predictions
-Deployed using Streamlit Cloud
-Publicly accessible live demo
+Weighted probabilistic fusion for final decision making
 
-Tech Stack
+The system predicts human emotions by analyzing both visual and vocal cues, improving robustness compared to single-modality systems.
+
+
+Problem Statement:
+
+Emotion recognition using a single modality (only face or only speech) can be unreliable due to:
+
+Lighting variations
+
+Background noise
+
+Ambiguous facial expressions
+
+Tone inconsistencies
+
+This project addresses that limitation by combining predictions from both modalities to produce a more reliable final output.
+
+
+System Architecture:
+
+Image Input → CNN-based Face Model → Emotion Probabilities
+
+Audio Input → Feature Extraction (MFCC + Spectral Features) → Dense Neural Network → Emotion Probabilities
+
+Fusion Layer → Weighted Average → Final Emotion
+
+
+Tech Stack:
+
 Python
+
 TensorFlow / Keras
+
 OpenCV
+
 Librosa
+
 Scikit-learn
+
 Streamlit
 
 Model Details:
-1.Face Emotion Model
-CNN-based architecture
-Input size: 96x96 grayscale images
-Trained on facial expression dataset
-Outputs probability distribution across emotions
 
-2.Speech Emotion Model
-Extracted MFCC and spectral audio features
-StandardScaler normalization
-Dense neural network classifier
+Face Emotion Model
+
+CNN-based architecture
+
+Input size: 96x96 images
+
+Normalized pixel values
+
+Outputs probability distribution across 7 emotions
+
+
+Speech Emotion Model:
+
 Trained on RAVDESS dataset (24 actors)
 
-Fusion Strategy
-Final emotion is determined using weighted probability fusion:
-Final Emotion = argmax( α * Face_Prediction + β * Speech_Prediction )
-Where:
-α and β represent modality weights
+Audio feature extraction using MFCC and spectral features
+
+StandardScaler normalization applied
+
+Dense neural network classifier
+
+Outputs probability distribution across emotions
+
+Preprocessing Steps:
+
+*Image:
+
+Resize to 96x96
+
+Normalize pixel values
+
+Reshape to match model input
+
+*Audio:
+
+Extract MFCC and spectral features
+
+Apply StandardScaler (same scaler used during training)
+
+Reshape to match model input
+
+
+Fusion Strategy:
+
+Final emotion is computed using weighted probability fusion:
+
+Final Emotion = argmax( 0.6 × Face_Prediction + 0.4 × Speech_Prediction )
+
+Why weighted fusion?
+
+Facial expressions are generally more stable visually
+
+Speech can be affected by noise
+
+Weighted fusion improves decision reliability
+
 
 Deployment
-The application is deployed on Streamlit Community Cloud.
+
+The application is deployed using Streamlit Community Cloud.
+
+
 To run locally:
+
 pip install -r requirements.txt
+
 streamlit run app.py
 
-Future Improvements
-Real-time webcam emotion detection
-Real-time microphone input
+Key Challenges Solved
+
+
+Handling tensor shape mismatches:
+
+Ensuring consistent preprocessing during inference
+
+Reusing the same StandardScaler used during training
+
+Managing multimodal label alignment
+
+Deploying deep learning models on Streamlit Cloud
+
+Cleaning Git repository for production
+
+
+Future Improvements:
+
+Real-time webcam and microphone integration
+
+Transformer-based multimodal fusion
+
 Model optimization for faster inference
 
 Cross-speaker generalization improvement
 
-Transformer-based multimodal fusion
+Performance evaluation metrics dashboard
+
+
+Conclusion:
+
+This project demonstrates practical implementation of multimodal deep learning, model integration, and cloud deployment. It showcases the ability to build, debug, and deploy an end-to-end AI system.
+

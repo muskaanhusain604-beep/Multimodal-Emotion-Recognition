@@ -178,6 +178,15 @@ D --> E[Final Emotion Prediction]
 
 ```
 
+## Results
+
+| Model | Validation Accuracy | Dataset |
+|------|------|------|
+| Face Emotion CNN | ~60–63% | FER2013 |
+| Speech Emotion Model | ~87–88% | RAVDESS |
+
+The multimodal system combines predictions from both models using weighted probabilistic fusion to improve robustness compared to single-modality emotion recognition.
+
 ## Deployment
 
 The application is deployed using **Streamlit Community Cloud**.

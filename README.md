@@ -4,157 +4,186 @@ Multimodal Emotion Recognition System
 
 ![App Demo](app_demo.png)
 
-Overview:
+# Multimodal Emotion Recognition System
 
-This project implements a deep learning–based Multimodal Emotion Recognition System that combines:
+## Overview
+This project implements a **Deep Learning–based Multimodal Emotion Recognition System** that combines facial expressions and speech signals to predict human emotions.
 
-Facial Expression Recognition (Image-based)
+The system integrates predictions from two modalities:
 
-Speech Emotion Recognition (Audio-based)
+- Facial Expression Recognition (image-based)
+- Speech Emotion Recognition (audio-based)
+- Weighted probabilistic fusion for final decision making
 
-Weighted probabilistic fusion for final decision making
+By analyzing both **visual and vocal cues**, the system improves reliability compared to traditional single-modality emotion recognition models.
 
-The system predicts human emotions by analyzing both visual and vocal cues, improving robustness compared to single-modality systems.
+---
 
+## Problem Statement
+Emotion recognition using only a single modality (face or speech) can often be unreliable due to various environmental and behavioral factors.
 
-Problem Statement:
+Common challenges include:
 
-Emotion recognition using a single modality (only face or only speech) can be unreliable due to:
+- Lighting variations affecting facial detection
+- Background noise in audio recordings
+- Ambiguous facial expressions
+- Tone inconsistencies in speech
 
-Lighting variations
+This project addresses these limitations by **combining predictions from both modalities**, producing a more robust and reliable emotion classification.
 
-Background noise
+---
 
-Ambiguous facial expressions
+## System Architecture
 
-Tone inconsistencies
+The system processes two different inputs and merges their predictions.
 
-This project addresses that limitation by combining predictions from both modalities to produce a more reliable final output.
+### Image Processing Pipeline
+Image Input → CNN Face Emotion Model → Emotion Probability Distribution
 
+### Audio Processing Pipeline
+Audio Input → Feature Extraction (MFCC + Spectral Features) → Dense Neural Network → Emotion Probability Distribution
 
-System Architecture:
+### Fusion Layer
+The outputs from both models are combined using **weighted probability fusion** to produce the final emotion prediction.
 
-Image Input → CNN-based Face Model → Emotion Probabilities
+---
 
-Audio Input → Feature Extraction (MFCC + Spectral Features) → Dense Neural Network → Emotion Probabilities
+## Tech Stack
 
-Fusion Layer → Weighted Average → Final Emotion
+The system is implemented using the following technologies:
 
+- Python
+- TensorFlow / Keras
+- OpenCV
+- Librosa
+- Scikit-learn
+- Streamlit
 
-Tech Stack:
+---
 
-Python
+## Model Details
 
-TensorFlow / Keras
+### Face Emotion Model
 
-OpenCV
+The facial emotion recognition model is based on a **Convolutional Neural Network (CNN)**.
 
-Librosa
+Key characteristics:
 
-Scikit-learn
+- CNN-based architecture
+- Input size: **96 × 96 grayscale images**
+- Pixel values normalized
+- Outputs probability distribution across **7 emotion classes**
 
-Streamlit
+---
 
-Model Details:
+### Speech Emotion Model
 
-Face Emotion Model
+The speech emotion recognition model analyzes acoustic features extracted from audio signals.
 
-CNN-based architecture
+Dataset used:
 
-Input size: 96x96 images
+- **RAVDESS dataset**
+- 24 actors with multiple emotional speech recordings
 
-Normalized pixel values
+Model pipeline:
 
-Outputs probability distribution across 7 emotions
+- Feature extraction using **MFCC and spectral features**
+- Data normalization using **StandardScaler**
+- Dense neural network classifier
+- Outputs probability distribution across emotions
 
+---
 
-Speech Emotion Model:
+## Preprocessing Steps
 
-Trained on RAVDESS dataset (24 actors)
+### Image Preprocessing
 
-Audio feature extraction using MFCC and spectral features
+Before feeding images into the CNN model:
 
-StandardScaler normalization applied
+- Resize image to **96 × 96**
+- Normalize pixel values
+- Reshape image to match model input dimensions
 
-Dense neural network classifier
+---
 
-Outputs probability distribution across emotions
+### Audio Preprocessing
 
-Preprocessing Steps:
+For speech input:
 
-*Image:
+- Extract **MFCC features**
+- Extract **spectral features**
+- Apply the same **StandardScaler used during training**
+- Reshape feature vector for model input
 
-Resize to 96x96
+Ensuring consistent preprocessing between training and inference is critical for accurate predictions.
 
-Normalize pixel values
+---
 
-Reshape to match model input
+## Fusion Strategy
 
-*Audio:
+The final emotion prediction is computed using **weighted probability fusion**.
 
-Extract MFCC and spectral features
+```
+Final Emotion = argmax(0.6 × Face_Prediction + 0.4 × Speech_Prediction)
+```
 
-Apply StandardScaler (same scaler used during training)
+### Why Weighted Fusion?
 
-Reshape to match model input
+- Facial expressions are generally **more visually stable**
+- Speech signals can be affected by **background noise**
+- Weighted fusion improves the **overall reliability of predictions**
 
+---
 
-Fusion Strategy:
+## Deployment
 
-Final emotion is computed using weighted probability fusion:
+The application is deployed using **Streamlit Community Cloud**.
 
-Final Emotion = argmax( 0.6 × Face_Prediction + 0.4 × Speech_Prediction )
+To run the application locally:
 
-Why weighted fusion?
-
-Facial expressions are generally more stable visually
-
-Speech can be affected by noise
-
-Weighted fusion improves decision reliability
-
-
-Deployment
-
-The application is deployed using Streamlit Community Cloud.
-
-
-To run locally:
-
+```
 pip install -r requirements.txt
-
 streamlit run app.py
+```
 
-Key Challenges Solved
+This launches an interactive web interface for testing emotion predictions.
 
+---
 
-Handling tensor shape mismatches:
+## Key Challenges Solved
 
-Ensuring consistent preprocessing during inference
+During development several practical challenges were addressed:
 
-Reusing the same StandardScaler used during training
+- Handling **tensor shape mismatches**
+- Maintaining consistent preprocessing during inference
+- Reusing the same **StandardScaler** used during model training
+- Aligning emotion labels between image and audio models
+- Deploying deep learning models on **Streamlit Cloud**
+- Cleaning and structuring the Git repository for production
 
-Managing multimodal label alignment
+---
 
-Deploying deep learning models on Streamlit Cloud
+## Future Improvements
 
-Cleaning Git repository for production
+Potential improvements for the system include:
 
+- Real-time **webcam and microphone integration**
+- Transformer-based **multimodal fusion models**
+- Model optimization for **faster inference**
+- Improved **cross-speaker generalization**
+- Performance evaluation dashboard with detailed metrics
 
-Future Improvements:
+---
 
-Real-time webcam and microphone integration
+## Conclusion
 
-Transformer-based multimodal fusion
+This project demonstrates the practical implementation of **multimodal deep learning**, combining computer vision and speech processing techniques.
 
-Model optimization for faster inference
+It showcases the ability to:
 
-Cross-speaker generalization improvement
+- Design and train deep learning models
+- Integrate multiple modalities
+- Debug and optimize model pipelines
+- Deploy AI applications using cloud platforms
 
-Performance evaluation metrics dashboard
-
-
-Conclusion:
-
-This project demonstrates practical implementation of multimodal deep learning, model integration, and cloud deployment. It showcases the ability to build, debug, and deploy an end-to-end AI system.
-
+The system represents a complete **end-to-end AI solution for emotion recognition**.

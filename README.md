@@ -19,7 +19,6 @@ By analyzing both **visual and vocal cues**, the system improves reliability com
 
 ---
 
-## Problem Statement
 Emotion recognition using only a single modality (face or speech) can often be unreliable due to various environmental and behavioral factors.
 
 Common challenges include:
@@ -48,6 +47,24 @@ The outputs from both models are combined using **weighted probability fusion** 
 
 ---
 
+```mermaid
+flowchart LR
+
+A[Image Input] --> B[Face Preprocessing]
+B --> C[CNN Face Emotion Model]
+C --> D[Face Emotion Probabilities]
+
+E[Audio Input] --> F[Audio Feature Extraction MFCC + Spectral]
+F --> G[Speech Emotion Neural Network]
+G --> H[Speech Emotion Probabilities]
+
+D --> I[Weighted Fusion Layer]
+H --> I
+
+I --> J[Final Emotion Prediction]
+```
+
+
 ## Tech Stack
 
 The system is implemented using the following technologies:
@@ -60,6 +77,21 @@ The system is implemented using the following technologies:
 - Streamlit
 
 ---
+
+## Data Processing Pipeline
+
+```mermaid
+flowchart TD
+
+A[Image Input] --> B[Resize 96x96]
+B --> C[Normalize Pixels]
+C --> D[CNN Model]
+
+E[Audio Input] --> F[Extract MFCC]
+F --> G[Extract Spectral Features]
+G --> H[StandardScaler]
+H --> I[Dense Neural Network]
+```
 
 ## Model Details
 
@@ -134,6 +166,17 @@ Final Emotion = argmax(0.6 × Face_Prediction + 0.4 × Speech_Prediction)
 - Weighted fusion improves the **overall reliability of predictions**
 
 ---
+
+```mermaid
+flowchart LR
+
+A[Face Emotion Probabilities] --> C[Weighted Fusion]
+B[Speech Emotion Probabilities] --> C
+
+C --> D[0.6 Face  0.4 Speech]
+D --> E[Final Emotion Prediction]
+
+```
 
 ## Deployment
 

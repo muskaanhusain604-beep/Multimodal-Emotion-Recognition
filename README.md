@@ -2,8 +2,11 @@ Multimodal Emotion Recognition System
 
 ## Demo
 
-![App Demo](app_demo.png)
+👉 [Click here to try the app](https://multimodal-emotion-recognition-ngzbqonmrjxa5uopz9w3on.streamlit.app/)
 
+### App Preview
+
+![App Screenshot](app_demo.png)
 # Multimodal Emotion Recognition System
 
 ## Overview
